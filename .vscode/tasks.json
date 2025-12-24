@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build OpenGL",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "src/main.cpp",
+        "src/glad.c",
+        "-Iinclude",
+        "-Llib",
+        "-lglfw3",
+        "-lopengl32",
+        "-lgdi32",
+        "-o",
+        "scene.exe"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
