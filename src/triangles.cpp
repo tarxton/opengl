@@ -42,6 +42,11 @@ int main() {
         return -1;
     }
 
+    //get num of vertex attribs supported
+    int nrAttributes;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+    std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+
     unsigned int vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
@@ -80,7 +85,7 @@ int main() {
     glAttachShader(shaderProgramA, vertexShader);
     glAttachShader(shaderProgramA, fragmentShaderA);
     glLinkProgram(shaderProgramA);
-    glGetProgramiv(shaderProgramA, GL_COMPILE_STATUS, &success);
+    glGetProgramiv(shaderProgramA, GL_LINK_STATUS, &success);
     if (!success) {
         glGetProgramInfoLog(shaderProgramA, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
@@ -92,7 +97,7 @@ int main() {
     glAttachShader(shaderProgramB, vertexShader);
     glAttachShader(shaderProgramB, fragmentShaderB);
     glLinkProgram(shaderProgramB);
-    glGetProgramiv(shaderProgramB, GL_COMPILE_STATUS, &success);
+    glGetProgramiv(shaderProgramB, GL_LINK_STATUS, &success);
     if(!success) {
         glGetProgramInfoLog(shaderProgramB, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
