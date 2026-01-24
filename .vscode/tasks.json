@@ -6,7 +6,7 @@
       "type": "shell",
       "command": "g++",
       "args": [
-        "src/main.cpp",
+        "src/shaders.cpp",
         "src/glad.c",
         "-Iinclude",
         "-Llib",
