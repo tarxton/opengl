@@ -37,9 +37,9 @@ int main() {
     Shader shader("src/vertex.glsl", "src/fragment.glsl");
     
     float vertices[] = {
-        0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-       -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,
+       -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,
+        0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f
     };
 
     unsigned int VAO, VBO;
@@ -64,6 +64,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         shader.use();
+        shader.setFloat("offset", 0.1f);
 
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);

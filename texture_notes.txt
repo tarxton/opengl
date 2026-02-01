@@ -1,0 +1,18 @@
+textures - 2d images (can be 3d or 1d)
+tell each vertex of the triangle which part of the texture it corresponds to
+each vertex then has a texture coordinate
+texture coords - 0 to 1 (x and y axis)
+sampling - retrieving texture color using texture coords
+
+texture wrapping - when coordinates outside range (0-1)
+repeat (def), mirrored repeat, clamp to edge (stretch edge), clamp to border (specific color)
+
+glTexParameter*(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S/T, GL_MIRRORED_REPEAT) s,t,r - x,y,z which texture axis
+
+texel - texture pixel, for texture filtering
+important when object large and texture small resolution
+GL_NEAREST and GL_LINEAR (pixelated or smoother)
+mipmaps - used when downscaling textures, same texture but twice smaller
+
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR)
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR) - magnifying doesn't use mipmaps

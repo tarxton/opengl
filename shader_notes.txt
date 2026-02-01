@@ -5,11 +5,14 @@ in type in_variable_name;
 in type in_variable_name;
 out type out_variable_name;
 uniform type uniform_name;
-{void main()
+
+void main()
+{
 // process input(s) and do some weird graphics stuff
 ...
 // output processed stuff to output variable
 out_variable_name = weird_stuff_we_processed;
+}
 
 vectors
 vec1,2,3,4
@@ -17,6 +20,7 @@ vec3 vectA = vec3(1.0f, 0.5f, 0.5f)
 vec4 vectB = vec4(vectA.xyz, 1.0f) <- swizzling (eg. vectA.xyxx)
 
 output from one shader -> input into another (same type and name)
+vertex -> fragment
 
 uniforms
 global, can be accessed from any shader in any stage of the shader program
