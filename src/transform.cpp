@@ -136,18 +136,21 @@ int main() {
         glBindTexture(GL_TEXTURE_2D, texture2);
 
         glm::mat4 trans = glm::mat4(1.0f);
-        trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0, 0.0, 1.0));
         trans = glm::translate(trans, glm::vec3(0.5, -0.5, 0.0));
-
-        shader.setFloat("visible", visible);
-        
-        shader.use();
-
+        trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0, 0.0, 1.0));
         glUniformMatrix4fv(glGetUniformLocation(shader.ID, "trans"), 1, GL_FALSE, glm::value_ptr(trans));
-
+        
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
+        
+        trans = glm::mat4(1.0);
+        trans = glm::translate(trans, glm::vec3(-0.5, 0.5, 0.0));
+        trans = glm::scale(trans, glm::vec3(sin(glfwGetTime())));
+        glUniformMatrix4fv(glGetUniformLocation(shader.ID, "trans"), 1, GL_FALSE, &trans[0][0]); //same as using glm::value_ptr(trans)
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        
+        shader.setFloat("visible", visible);
+        
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
