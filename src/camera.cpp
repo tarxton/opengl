@@ -138,7 +138,7 @@ int main()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
     unsigned int texture1, texture2;
@@ -196,7 +196,7 @@ int main()
 
         processInput(window);
 
-        glClearColor(0.2f, 0.3f, 0.7f, 1.0f);
+        glClearColor(0.7f, 0.3f, 0.7f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glActiveTexture(GL_TEXTURE0);
@@ -250,14 +250,14 @@ void processInput(GLFWwindow *window)
 
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
     {
-        visible += 0.001f;
+        visible += 0.01f;   // depending on machine
         if (visible >= 1.0f)
             visible = 1.0f;
     }
 
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
     {
-        visible -= 0.001f;
+        visible -= 0.01f;   // depending on machine
         if (visible <= 0.0f)
             visible = 0.0f;
     }
