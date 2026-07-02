@@ -10,22 +10,23 @@
 #include <cmath>
 
 #include <opengl/shader.h>
+#include <opengl/camera.h>
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 
-glm::vec3 camPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 camFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 camUp = glm::vec3(0.0f, 1.0f, 0.0f);
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGTH = 600;
+
+
 
 bool firstMouse = true;
-float lastX = 400.0f;
-float lastY = 300.0f;
-float yaw = -90.0f;
-float pitch = 0.0f;
-float fov = 45.0f;
+float lastX = SCR_WIDTH / 2.0f;
+float lastY = SCR_HEIGTH / 2.0f;
+
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -39,7 +40,7 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow *window = glfwCreateWindow(800, 600, "opengl", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGTH, "opengl", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -213,11 +214,10 @@ int main()
         // glm::vec3 cameraR = glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), cameraDir));
         // glm::vec3 cameraU = glm::cross(cameraDir, cameraR);
 
-        glm::mat4 projection = glm::perspective(glm::radians(fov), 800.0f / 600.0f, 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(camera.Fov), (float)SCR_WIDTH / (float)SCR_HEIGTH, 0.1f, 100.0f);
         shader.setMat4("projection", projection);
 
-        glm::mat4 view = glm::mat4(1.0f);
-        view = glm::lookAt(camPos, camPos + camFront, camUp);
+        glm::mat4 view = camera.getViewMat();
         shader.setMat4("view", view);
 
         glBindVertexArray(VAO);
@@ -262,19 +262,14 @@ void processInput(GLFWwindow *window)
             visible = 0.0f;
     }
 
-    const float camSpeed = (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS ? 5.5f : 3.5f) * deltaTime;
-
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camPos += camSpeed * camFront;
-
+        camera.ProcessKeyboard(FORWARD, deltaTime); 
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camPos -= camSpeed * camFront;
-
+        camera.ProcessKeyboard(BACKWARD, deltaTime); 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camPos += glm::normalize(glm::cross(camFront, camUp)) * camSpeed;
-
+        camera.ProcessKeyboard(RIGHT, deltaTime); 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camPos -= glm::normalize(glm::cross(camFront, camUp)) * camSpeed;
+        camera.ProcessKeyboard(LEFT, deltaTime); 
 }
 
 void mouse_callback(GLFWwindow *window, double xpos, double ypos)
@@ -291,29 +286,12 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos)
     lastX = xpos;
     lastY = ypos;
 
-    float sensitivity = 0.1f;
-    xoffset *= sensitivity;
-    yoffset *= sensitivity;
-
-    yaw += xoffset;
-    pitch += yoffset;
-
-    if (pitch > 89.0f) pitch = 89.0f;
-    if (pitch < -89.0f) pitch = -89.0f;
-
-    glm::vec3 dir;
-    dir.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    dir.y = sin(glm::radians(pitch));
-    dir.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    camFront = glm::normalize(dir);
+    camera.ProcessMouse(xoffset, yoffset);
 }
 
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
-    fov -= (float)yoffset;
-
-    if (fov > 90.0f) fov = 90.0f;
-    if (fov < 1.0f) fov = 1.0f;
+    camera.ProcessScroll(yoffset);
 }
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height)
