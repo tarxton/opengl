@@ -63,7 +63,7 @@ public:
         if (direction == BACKWARD) Position -= Front * speed;
         if (direction == RIGHT) Position += Right * speed;
         if (direction == LEFT) Position -= Right * speed;
-        Position.y = 0.0f;
+        //Position.y = 0.0f;  fps camera
     }
 
     void ProcessMouse(float xoffset, float yoffset, GLboolean constrainPitch = true)
