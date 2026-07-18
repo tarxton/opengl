@@ -176,7 +176,7 @@ int main()
 
         processInput(window);
 
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.149f, 0.149f, 0.149f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         cubeShader.use();
@@ -191,32 +191,32 @@ int main()
         cubeShader.setVec3("dir.specular", 0.5f, 0.5f, 0.5f);
         // point light 1
         cubeShader.setVec3("pnt[0].position", pointLightPositions[0]);
-        cubeShader.setVec3("pnt[0].ambient", 0.05f, 0.05f, 0.05f);
-        cubeShader.setVec3("pnt[0].diffuse", 0.8f, 0.8f, 0.8f);
+        cubeShader.setVec3("pnt[0].ambient", glm::vec3(0.114f, 0.376f, 0.761f));
+        cubeShader.setVec3("pnt[0].diffuse", glm::vec3(0.114f, 0.376f, 0.761f));
         cubeShader.setVec3("pnt[0].specular", 1.0f, 1.0f, 1.0f);
         cubeShader.setFloat("pnt[0].kc", 1.0f);
         cubeShader.setFloat("pnt[0].kl", 0.09f);
         cubeShader.setFloat("pnt[0].kq", 0.032f);
         // point light 2
         cubeShader.setVec3("pnt[1].position", pointLightPositions[1]);
-        cubeShader.setVec3("pnt[1].ambient", 0.05f, 0.05f, 0.05f);
-        cubeShader.setVec3("pnt[1].diffuse", 0.8f, 0.8f, 0.8f);
+        cubeShader.setVec3("pnt[1].ambient", glm::vec3(0.114f, 0.376f, 0.761f));
+        cubeShader.setVec3("pnt[1].diffuse", glm::vec3(0.114f, 0.376f, 0.761f));
         cubeShader.setVec3("pnt[1].specular", 1.0f, 1.0f, 1.0f);
         cubeShader.setFloat("pnt[1].kc", 1.0f);
         cubeShader.setFloat("pnt[1].kl", 0.09f);
         cubeShader.setFloat("pnt[1].kq", 0.032f);
         // point light 3
         cubeShader.setVec3("pnt[2].position", pointLightPositions[2]);
-        cubeShader.setVec3("pnt[2].ambient", 0.05f, 0.05f, 0.05f);
-        cubeShader.setVec3("pnt[2].diffuse", 0.8f, 0.8f, 0.8f);
+        cubeShader.setVec3("pnt[2].ambient", glm::vec3(0.114f, 0.376f, 0.761f));
+        cubeShader.setVec3("pnt[2].diffuse", glm::vec3(0.114f, 0.376f, 0.761f));
         cubeShader.setVec3("pnt[2].specular", 1.0f, 1.0f, 1.0f);
         cubeShader.setFloat("pnt[2].kc", 1.0f);
         cubeShader.setFloat("pnt[2].kl", 0.09f);
         cubeShader.setFloat("pnt[2].kq", 0.032f);
         // point light 4
         cubeShader.setVec3("pnt[3].position", pointLightPositions[3]);
-        cubeShader.setVec3("pnt[3].ambient", 0.05f, 0.05f, 0.05f);
-        cubeShader.setVec3("pnt[3].diffuse", 0.8f, 0.8f, 0.8f);
+        cubeShader.setVec3("pnt[3].ambient", glm::vec3(0.114f, 0.376f, 0.761f));
+        cubeShader.setVec3("pnt[3].diffuse", glm::vec3(0.114f, 0.376f, 0.761f));
         cubeShader.setVec3("pnt[3].specular", 1.0f, 1.0f, 1.0f);
         cubeShader.setFloat("pnt[3].kc", 1.0f);
         cubeShader.setFloat("pnt[3].kl", 0.09f);
@@ -264,7 +264,8 @@ int main()
 
         glBindVertexArray(lightVAO);
         for (unsigned int i = 0; i < 4; i++)
-        {
+        {   
+            lightShader.setVec3("aColor", glm::vec3(0.114f, 0.376f, 0.761f));
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, pointLightPositions[i]);
             model = glm::scale(model, glm::vec3(0.2f));
