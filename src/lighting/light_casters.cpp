@@ -290,8 +290,11 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+    static bool fWasDown = false;
+    bool fIsDown = glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS;
+    if (fIsDown && !fWasDown)
         on = !on;
+    fWasDown = fIsDown;
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.ProcessKeyboard(FORWARD, deltaTime); 
