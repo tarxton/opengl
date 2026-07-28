@@ -17,6 +17,7 @@ struct Vertex {
 struct Texture {
     unsigned int id;
     std::string type;
+    std::string path;
 };
 
 class Mesh {
@@ -46,7 +47,7 @@ class Mesh {
                 if (name == "texture_diffuse") number = std::to_string(diffNr++);
                 else if (name == "texture_specular") number = std::to_string(specNr++);
 
-                shader.setFloat(("material." + name + number).c_str(), i);
+                shader.setInt((name + number).c_str(), i);
                 glBindTexture(GL_TEXTURE_2D, textures[i].id);
             }
             glActiveTexture(GL_TEXTURE0);
