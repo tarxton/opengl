@@ -63,7 +63,7 @@ int main()
 
     Model backpack("resources/objects/backpack/backpack.obj");
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe
 
     while(!glfwWindowShouldClose(window))
     {
@@ -77,6 +77,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         shader.use();
+        shader.setVec3("viewPos", camera.Position);
 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Fov), (float)SCR_WIDTH / (float)SCR_HEIGTH, 0.1f, 100.0f);
         glm::mat4 view = camera.getViewMat();
